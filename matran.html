@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Ứng dụng Nhân Ma Trận</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h2, h3 {
+      color: #2c3e50;
+    }
+    input[type="number"] {
+      width: 50px;
+      text-align: center;
+    }
+    table {
+      margin: 10px 0;
+      border-collapse: collapse;
+    }
+    td {
+      padding: 5px;
+      border: 1px solid #ccc;
+    }
+    .matrix-container {
+      display: flex;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+<h2>✨ Ứng dụng Nhân Ma Trận</h2>
+
+<label>Số dòng của A: <input type="number" id="rowsA" value="2"></label>
+<label>Số cột của A (cũng là số dòng của B): <input type="number" id="colsA" value="2"></label>
+<label>Số cột của B: <input type="number" id="colsB" value="2"></label>
+<button onclick="createMatrixInputs()">Tạo Ma Trận</button>
+
+<div id="matrixInputs" class="matrix-container"></div>
+
+<br>
+<button onclick="multiply()">🧮 Nhân Ma Trận</button>
+
+<h3>Kết quả:</h3>
+<div id="result"></div>
+
+<script>
+function createMatrixInputs() {
+  let rA = +document.getElementById("rowsA").value;
+  let cA = +document.getElementById("colsA").value;
+  let cB = +document.getElementById("colsB").value;
+
+  let matrixHTML = "";
+
+  // Ma trận A
+  matrixHTML += "<div><h3>Ma trận A</h3><table>";
+  for (let i = 0; i < rA; i++) {
+    matrixHTML += "<tr>";
+    for (let j = 0; j < cA; j++) {
+      matrixHTML += `<td><input type="number" id="A-${i}-${j}" value="0"></td>`;
+    }
+    matrixHTML += "</tr>";
+  }
+  matrixHTML += "</table></div>";
+
+  // Ma trận B
+  matrixHTML += "<div><h3>Ma trận B</h3><table>";
+  for (let i = 0; i < cA; i++) {
+    matrixHTML += "<tr>";
+    for (let j = 0; j < cB; j++) {
+      matrixHTML += `<td><input type="number" id="B-${i}-${j}" value="0"></td>`;
+    }
+    matrixHTML += "</tr>";
+  }
+  m
