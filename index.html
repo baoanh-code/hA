@@ -13,9 +13,17 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
             min-height: 100vh;
             overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Snowflakes */
@@ -46,6 +54,47 @@
             }
         }
 
+        /* Floating hearts background */
+        .floating-heart {
+            position: fixed;
+            font-size: 20px;
+            opacity: 0.6;
+            animation: floatUp 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% {
+                bottom: -50px;
+                opacity: 0;
+                transform: translateX(0) rotate(0deg);
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                bottom: 100vh;
+                opacity: 0;
+                transform: translateX(100px) rotate(360deg);
+            }
+        }
+
+        /* Christmas lights */
+        .christmas-light {
+            position: fixed;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+            z-index: 1001;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
         /* Screen 1: Heart Button */
         #screen1 {
             display: flex;
@@ -62,17 +111,27 @@
         .heart-button {
             width: 200px;
             height: 200px;
-            background: #ff4757;
+            background: linear-gradient(45deg, #ff4757, #ff6b81, #ff4757);
+            background-size: 200% 200%;
+            animation: heartbeat 1.5s infinite, gradientMove 3s ease infinite;
             position: relative;
             transform: rotate(-45deg);
             cursor: pointer;
             transition: all 0.3s ease;
-            animation: heartbeat 1.5s infinite;
-            box-shadow: 0 20px 60px rgba(255, 71, 87, 0.5);
+            box-shadow: 0 20px 60px rgba(255, 71, 87, 0.5),
+                        0 0 30px rgba(255, 71, 87, 0.8),
+                        inset 0 0 20px rgba(255, 255, 255, 0.3);
+            filter: drop-shadow(0 0 20px #ff4757);
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .heart-button:hover {
             transform: rotate(-45deg) scale(1.1);
+            filter: drop-shadow(0 0 40px #ff4757) brightness(1.2);
         }
 
         .heart-button::before,
@@ -80,7 +139,9 @@
             content: "";
             width: 200px;
             height: 200px;
-            background: #ff4757;
+            background: linear-gradient(45deg, #ff4757, #ff6b81, #ff4757);
+            background-size: 200% 200%;
+            animation: gradientMove 3s ease infinite;
             border-radius: 50%;
             position: absolute;
         }
@@ -105,6 +166,23 @@
             font-weight: bold;
             z-index: 10;
             pointer-events: none;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                         0 0 20px rgba(255, 255, 255, 0.6),
+                         0 0 30px rgba(255, 255, 255, 0.4);
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                             0 0 20px rgba(255, 255, 255, 0.6),
+                             0 0 30px rgba(255, 255, 255, 0.4);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 1),
+                             0 0 30px rgba(255, 255, 255, 0.8),
+                             0 0 40px rgba(255, 255, 255, 0.6);
+            }
         }
 
         @keyframes heartbeat {
@@ -127,23 +205,72 @@
             background: rgba(255, 255, 255, 0.95);
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                        0 0 40px rgba(255, 107, 129, 0.6);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+
+        .wish-container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff6b6b);
+            background-size: 300% 300%;
+            border-radius: 20px;
+            z-index: -1;
+            animation: rainbowBorder 3s linear infinite;
+        }
+
+        @keyframes rainbowBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .wish-title {
-            color: #ff4757;
+            background: linear-gradient(45deg, #ff4757, #ffa502, #ff4757, #ffa502);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbowText 3s ease infinite;
             font-size: 32px;
             text-align: center;
             margin-bottom: 30px;
             font-weight: bold;
+            filter: drop-shadow(0 2px 4px rgba(255, 71, 87, 0.3));
+        }
+
+        @keyframes rainbowText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .wish-content {
-            background: #fff;
+            background: linear-gradient(135deg, #fff 0%, #ffe6e6 100%);
             padding: 30px;
             border-radius: 15px;
             border: 3px solid #ff4757;
             margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.3),
+                        inset 0 0 20px rgba(255, 107, 129, 0.1);
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 71, 87, 0.3),
+                            inset 0 0 20px rgba(255, 107, 129, 0.1);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 71, 87, 0.5),
+                            inset 0 0 30px rgba(255, 107, 129, 0.2);
+            }
         }
 
         .wish-text {
@@ -191,7 +318,9 @@
         .submit-btn {
             width: 100%;
             padding: 15px;
-            background: #ff4757;
+            background: linear-gradient(45deg, #ff4757, #ff6b81, #ffa502, #ff4757);
+            background-size: 300% 300%;
+            animation: buttonGradient 3s ease infinite;
             color: white;
             border: none;
             border-radius: 10px;
@@ -200,12 +329,34 @@
             cursor: pointer;
             margin-top: 20px;
             transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        @keyframes buttonGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .submit-btn:hover {
-            background: #ff6b81;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);
+            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.5);
         }
 
         /* Screen 3: Gift Box */
@@ -232,35 +383,57 @@
         .gift-box {
             width: 200px;
             height: 200px;
-            background: #ff4757;
+            background: linear-gradient(135deg, #ff4757 0%, #ff6b81 50%, #ff4757 100%);
             margin: 0 auto 30px;
             position: relative;
             border-radius: 10px;
-            animation: bounce 2s infinite;
+            animation: bounce 2s infinite, rotate3d 4s ease-in-out infinite;
             cursor: pointer;
             transition: transform 0.3s;
+            box-shadow: 0 10px 40px rgba(255, 71, 87, 0.5),
+                        0 0 30px rgba(255, 71, 87, 0.3),
+                        inset 0 0 20px rgba(255, 255, 255, 0.2);
+            transform-style: preserve-3d;
+        }
+
+        @keyframes rotate3d {
+            0%, 100% { transform: perspective(1000px) rotateY(0deg) translateY(0); }
+            50% { transform: perspective(1000px) rotateY(10deg) translateY(-10px); }
         }
 
         .gift-box:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) perspective(1000px) rotateY(15deg);
+            box-shadow: 0 15px 50px rgba(255, 71, 87, 0.7),
+                        0 0 50px rgba(255, 71, 87, 0.5);
         }
 
         .gift-ribbon-v {
             position: absolute;
             width: 40px;
             height: 200px;
-            background: #ffd700;
+            background: linear-gradient(90deg, #ffd700, #ffed4e, #ffd700);
+            background-size: 200% 200%;
+            animation: shine 2s ease infinite;
             left: 50%;
             transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
         .gift-ribbon-h {
             position: absolute;
             width: 200px;
             height: 40px;
-            background: #ffd700;
+            background: linear-gradient(180deg, #ffd700, #ffed4e, #ffd700);
+            background-size: 200% 200%;
+            animation: shine 2s ease infinite;
             top: 50%;
             transform: translateY(-50%);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes shine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .gift-bow {
@@ -270,14 +443,22 @@
             transform: translateX(-50%);
             width: 80px;
             height: 60px;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+            animation: bowBounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bowBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-5px); }
         }
 
         .bow-left, .bow-right {
             position: absolute;
             width: 40px;
             height: 40px;
-            background: #ffd700;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
             border-radius: 50% 50% 0 50%;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
         }
 
         .bow-left {
@@ -330,14 +511,50 @@
             background: rgba(255, 255, 255, 0.95);
             padding: 50px 30px;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                        0 0 40px rgba(255, 107, 129, 0.6);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            animation: containerPulse 3s ease-in-out infinite;
+        }
+
+        .question-container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff6b6b);
+            background-size: 300% 300%;
+            border-radius: 20px;
+            z-index: -1;
+            animation: rainbowBorder 3s linear infinite;
+        }
+
+        @keyframes containerPulse {
+            0%, 100% {
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                            0 0 40px rgba(255, 107, 129, 0.6);
+            }
+            50% {
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                            0 0 60px rgba(255, 107, 129, 0.8);
+            }
         }
 
         .question-text {
             font-size: 32px;
-            color: #ff4757;
+            background: linear-gradient(45deg, #ff4757, #ffa502, #ff4757, #ffa502);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbowText 3s ease infinite;
             font-weight: bold;
             margin-bottom: 50px;
+            filter: drop-shadow(0 2px 4px rgba(255, 71, 87, 0.3));
         }
 
         .button-container {
@@ -360,20 +577,47 @@
         }
 
         .yes-btn {
-            background: #2ecc71;
+            background: linear-gradient(45deg, #2ecc71, #27ae60, #2ecc71);
+            background-size: 200% 200%;
+            animation: buttonGradient 2s ease infinite, yesPulse 1.5s ease-in-out infinite;
             color: white;
+            box-shadow: 0 5px 20px rgba(46, 204, 113, 0.5),
+                        0 0 30px rgba(46, 204, 113, 0.3);
+        }
+
+        @keyframes yesPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 5px 20px rgba(46, 204, 113, 0.5),
+                            0 0 30px rgba(46, 204, 113, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 30px rgba(46, 204, 113, 0.7),
+                            0 0 40px rgba(46, 204, 113, 0.5);
+            }
         }
 
         .yes-btn:hover {
-            background: #27ae60;
-            transform: scale(1.1);
+            transform: scale(1.15);
+            box-shadow: 0 10px 40px rgba(46, 204, 113, 0.8),
+                        0 0 50px rgba(46, 204, 113, 0.6);
         }
 
         .no-btn {
-            background: #e74c3c;
+            background: linear-gradient(45deg, #e74c3c, #c0392b, #e74c3c);
+            background-size: 200% 200%;
+            animation: buttonGradient 2s ease infinite, noShake 0.5s ease-in-out infinite;
             color: white;
             position: fixed;
             z-index: 9999;
+            box-shadow: 0 5px 20px rgba(231, 76, 60, 0.5);
+        }
+
+        @keyframes noShake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
         }
 
         /* Final Screen */
@@ -391,24 +635,64 @@
             background: rgba(255, 255, 255, 0.95);
             padding: 60px 40px;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                        0 0 60px rgba(255, 107, 129, 0.8);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            animation: finalPulse 2s ease-in-out infinite;
+        }
+
+        .final-container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff6b6b);
+            background-size: 300% 300%;
+            border-radius: 20px;
+            z-index: -1;
+            animation: rainbowBorder 3s linear infinite;
+        }
+
+        @keyframes finalPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
         }
 
         .final-text {
             font-size: 36px;
-            color: #ff4757;
+            background: linear-gradient(45deg, #ff4757, #ffa502, #ff4757, #ffa502);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbowText 3s ease infinite;
             font-weight: bold;
             margin-bottom: 30px;
+            filter: drop-shadow(0 2px 4px rgba(255, 71, 87, 0.3));
         }
 
         .hearts-animation {
             font-size: 50px;
-            animation: float 2s infinite;
+            animation: float 2s infinite, heartRotate 3s linear infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 107, 129, 0.8));
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.1); }
+        }
+
+        @keyframes heartRotate {
+            0% { filter: drop-shadow(0 0 10px rgba(255, 107, 129, 0.8)) hue-rotate(0deg); }
+            100% { filter: drop-shadow(0 0 10px rgba(255, 107, 129, 0.8)) hue-rotate(360deg); }
         }
 
         .user-message-display {
@@ -436,6 +720,21 @@
     </style>
 </head>
 <body>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // EmailJS Configuration - ĐÃ ĐIỀN SẴN
+        const EMAILJS_PUBLIC_KEY = '4cs69Ccx8sLhCJX8y';
+        const EMAILJS_SERVICE_ID = 'service_zkci8qj';
+        const EMAILJS_TEMPLATE_ID = 'template_jrf9cff';
+        const YOUR_EMAIL = 'baoanh1342407@gmail.com';
+
+        // Initialize EmailJS
+        (function(){
+            emailjs.init(EMAILJS_PUBLIC_KEY);
+        })();
+    </script>
+
     <!-- Screen 1: Heart Button -->
     <div id="screen1">
         <div class="heart-container">
@@ -453,15 +752,10 @@
                 <p class="wish-text">
                     <!-- CHỖ NÀY BẠN ĐIỀN LỜI CHÚC CỦA BẠN -->
                     <span class="your-wish">
-                        Gửi bé mập địt,<br><br>
-                        Cũng gần 2 năm rồi anh biết bữa giờ chúng ta hay cãi nhau, giận đồ nhiều.
-                        Anh cũng hay khó chịu, ghen nhảm, cáu gắt, yêu cầu em phải làm theo đủ thứ theo ý anh, 
-                        Nếu Anh làm gì hay yêu cầu gì em không muốn không hài lòng, em hãy kiến nhẫn bên anh và 
-                        giải thích an ủi anh nha, đừng im lặng có gì em cứ nói, em không nói đc thì hãy cho anh
-                        chứ đừng im lặng anh cảm thấy mấy lúc vậy rất bực và bất lực nản nữa nên có gì em cứ nói với anh,
-                        chưa nói được thì note lại khi khác nói.
-                        Em là món quà lớn nhất của anh rồi, siuuu siuuu bự.
-                        Chúc em một mùa giáng sinh thật ấm áp và tràn ngập niềm vui, gặp nhiều may mắn và sức khỏe!<br><br>
+                        Em yêu của anh,<br><br>
+                        Giáng sinh này, anh muốn gửi đến em những lời chúc ngọt ngào nhất.
+                        Em là món quà quý giá nhất mà cuộc đời trao tặng cho anh.
+                        Chúc em một mùa giáng sinh thật ấm áp và tràn ngập niềm vui!<br><br>
                         Yêu em rất nhiều! ❤️🎅🎄
                     </span>
                     <!-- KẾT THÚC PHẦN ĐIỀN LỜI CHÚC -->
@@ -530,10 +824,6 @@
             <div class="hearts-animation">
                 ❤️ 💕 💖 💗 💝
             </div>
-            <div class="user-message-display" id="finalMessageDisplay" style="display: none;">
-                <div class="user-message-title">Lời nhắn của em:</div>
-                <div class="user-message-text" id="finalMessageText"></div>
-            </div>
         </div>
     </div>
 
@@ -559,6 +849,47 @@
             }
         }
 
+        // Create floating hearts background
+        function createFloatingHearts() {
+            const hearts = ['❤️', '💕', '💖', '💗', '💝', '💞', '💓'];
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('floating-heart');
+                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                    heart.style.animationDelay = Math.random() * 3 + 's';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 8000);
+                }, i * 200);
+            }
+        }
+
+        // Create Christmas lights
+        function createChristmasLights() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            const lightCount = 20;
+            for (let i = 0; i < lightCount; i++) {
+                const light = document.createElement('div');
+                light.classList.add('christmas-light');
+                light.style.left = (i * (100 / lightCount)) + 'vw';
+                light.style.backgroundColor = colors[i % colors.length];
+                light.style.animationDelay = (i * 0.1) + 's';
+                document.body.appendChild(light);
+            }
+        }
+
+        // Initialize decorations on page load
+        window.addEventListener('load', () => {
+            createChristmasLights();
+            createFloatingHearts();
+            setInterval(createFloatingHearts, 8000);
+        });
+
         // Open heart and show wishes
         function openHeart() {
             document.getElementById('screen1').style.display = 'none';
@@ -576,8 +907,30 @@
                 alert('Em hãy viết gì đó cho anh nhé! 💕');
                 return;
             }
+            
+            // Send email with user's message
+            sendEmailToYou(userMessageText);
+            
             document.getElementById('screen2').style.display = 'none';
             document.getElementById('screen3').style.display = 'block';
+        }
+
+        // Function to send email
+        function sendEmailToYou(message) {
+            const templateParams = {
+                to_email: YOUR_EMAIL,
+                from_name: 'Người yêu của bạn 💕',
+                message: message,
+                date: new Date().toLocaleString('vi-VN')
+            };
+
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+                .then(function(response) {
+                    console.log('Email sent successfully!', response.status, response.text);
+                }, function(error) {
+                    console.log('Failed to send email:', error);
+                    // Vẫn tiếp tục cho dù email fail
+                });
         }
 
         // Open gift box
@@ -608,18 +961,62 @@
             noBtn.style.top = randomY + 'px';
         }
 
+        // Create confetti explosion
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500'];
+            const confettiCount = 100;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = '50%';
+                    confetti.style.top = '50%';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.zIndex = '10000';
+                    confetti.style.pointerEvents = 'none';
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = Math.random() * 15 + 5;
+                    const vx = Math.cos(angle) * velocity;
+                    const vy = Math.sin(angle) * velocity;
+                    
+                    document.body.appendChild(confetti);
+                    
+                    let x = 0, y = 0;
+                    let gravity = 0.5;
+                    let vyTemp = vy;
+                    
+                    const animate = () => {
+                        x += vx;
+                        y += vyTemp;
+                        vyTemp += gravity;
+                        
+                        confetti.style.transform = `translate(${x}px, ${y}px) rotate(${x * 2}deg)`;
+                        confetti.style.opacity = 1 - (y / 500);
+                        
+                        if (y < 500) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            confetti.remove();
+                        }
+                    };
+                    
+                    animate();
+                }, i * 10);
+            }
+        }
+
         // Say yes
         function sayYes() {
             document.getElementById('screen4').style.display = 'none';
             document.getElementById('screen5').style.display = 'block';
             
-            // Show user message if exists
-            if (userMessageText.trim() !== '') {
-                document.getElementById('finalMessageDisplay').style.display = 'block';
-                document.getElementById('finalMessageText').innerText = userMessageText;
-            }
-            
-            // Create celebration snowflakes
+            // Create celebration effects
+            createConfetti();
             for (let i = 0; i < 100; i++) {
                 setTimeout(() => {
                     createSnowflakes();
